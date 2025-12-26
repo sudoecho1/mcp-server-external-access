@@ -178,12 +178,34 @@ java -jar mcp-proxy-all.jar --sse-url http://<remote-server-ip>:9876
 
 Expected output: `Successfully connected to SSE server at http://<remote-server-ip>:9876`
 
-### Syncing with Upstream
+### Syncing with Official Repository
 
-This fork maintains an upstream remote to stay in sync with official PortSwigger updates:
+To stay synced with the official PortSwigger repository, you can set up an upstream remote:
 ```bash
+git remote add upstream https://github.com/PortSwigger/mcp-server.git
 git fetch upstream
 git merge upstream/main
 ```
 
-Extend the Paginated interface to add auto-pagination support.
+## VS Code Integration
+
+For integrated MCP support in VS Code:
+
+1. *(Optional)* Install the [MCP Kali Extension](https://marketplace.visualstudio.com/items?itemName=kali.mcp-kali) for enhanced ease of use
+2. Add the following to your VS Code MCP configuration (`.vscode/mcp.json` or via settings):
+
+```json
+"burpMcp": {
+  "command": "java",
+  "args": [
+    "-jar",
+    "./mcp-proxy/build/libs/mcp-proxy-all.jar",
+    "--sse-url",
+    "http://<remote-server-ip>:9876"
+  ]
+}
+```
+
+Replace `<remote-server-ip>` with your Burp Suite server's IP address.
+
+This connects VS Code to your remote Burp Suite instance via the MCP proxy.
